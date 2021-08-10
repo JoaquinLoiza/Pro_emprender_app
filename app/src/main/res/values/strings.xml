@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">ProEmprender</string>
+    <string name="title">Pro Emprender</string>
+    <string name="products">Productos</string>
+    <string name="profit_calculator">Calculadora de ganancias</string>
+</resources>
