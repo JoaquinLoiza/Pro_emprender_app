@@ -1,4 +1,4 @@
-package proemprender.code;
+package proemprender.activities;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package proemprender.code;
+package proemprender.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         btn_products.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, Products.class));
+                startActivity(new Intent(MainActivity.this, ProductsActivity.class));
             }
         });
     }
