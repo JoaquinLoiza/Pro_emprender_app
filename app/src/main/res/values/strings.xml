@@ -3,4 +3,5 @@
     <string name="title">Pro Emprender</string>
     <string name="products">Productos</string>
     <string name="profit_calculator">Calculadora de ganancias</string>
+    <string name="newProduct">Nuevo Producto</string>
 </resources>

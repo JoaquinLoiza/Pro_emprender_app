@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ProductsActivity">
 
+    <Button
+        android:id="@+id/btn_newProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_weight="1"
+        android:text="@string/newProduct"
+        app:layout_constraintBottom_toTopOf="@+id/dinamic_products"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ListView
         android:id="@+id/dinamic_products"
         android:layout_width="match_parent"
@@ -17,5 +28,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0" >
+
+    </ListView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
