@@ -1,42 +1,45 @@
 package proemprender.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import java.util.ArrayList;
-
 import proemprender.Product;
+import proemprender.model.DbAdapter;
 
 public class ProductsActivity extends AppCompatActivity {
     ListView products;
     ArrayList<String> listaDatos;
+    DbAdapter helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products);
         products= findViewById(R.id.dinamic_products);
+        helper = new DbAdapter(this);
+        newProduct();
         loadProducts();
-        ArrayAdapter<String> adapter=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listaDatos);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listaDatos);
         products.setAdapter(adapter);
     }
 
+    private void newProduct() {
+        helper.insertProduct("Torta");
+        helper.insertProduct("Factura");
+        helper.insertProduct("Pasta flora");
+        helper.insertProduct("Media luna");
+        helper.insertProduct("Brownie");
+    }
+
     private void loadProducts() {
-
-        Product torta = new Product(1, "Torta");
-        Product factura = new Product(2, "Factura");
-        Product pastaflora = new Product(3, "Pasta flora");
-        Product medialuna = new Product(4, "Media luna");
-        Product brownie = new Product(5, "Brownie");
-
         listaDatos = new ArrayList<>();
-            //products harcodeados
-            listaDatos.add(torta.getName());
-            listaDatos.add(factura.getName());
-            listaDatos.add(pastaflora.getName());
-            listaDatos.add(medialuna.getName());
-            listaDatos.add(brownie.getName());
+        Cursor cursor = helper.getProducts();
+        while (cursor.moveToNext()){
+            listaDatos.add(cursor.getString(1));
+        }
     }
 }

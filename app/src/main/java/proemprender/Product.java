@@ -6,12 +6,12 @@ public class Product {
 
     private final Integer id;
     private String name;
-    private ArrayList<Component> component;
+    //private ArrayList<Component> component;
 
     public Product(Integer id, String name) {
         this.id = id;
         this.name = name;
-        this.component = new ArrayList<>();
+        //this.component = new ArrayList<>();
     }
 
     public Integer getId() {
@@ -26,11 +26,11 @@ public class Product {
         this.name = name;
     }
 
-    public ArrayList<Component> getComponent() {
+    /*public ArrayList<Component> getComponent() {
         return component;
     }
 
     public void setComponent(ArrayList<Component> component) {
         this.component = component;
-    }
+    }*/
 }
