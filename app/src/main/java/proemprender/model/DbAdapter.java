@@ -46,16 +46,24 @@ public class DbAdapter {
         private static final String TABLE_COMPONENTS = "components";
         private static final String UID_COMPONENT = "id";
         private static final String NAME_COMPONENT = "name";
-        private static final String CREATE_TABLE_COMPONENTS = "CREATE TABLE "+ TABLE_COMPONENTS +" ("+ UID_COMPONENT +" INTEGER PRIMARY KEY AUTOINCREMENT, "+ NAME_COMPONENT +" VARCHAR(255));";
+        private static final String REFERENCE_TO_COMPONENT = "fk_componentes";
         private static final String DROP_TABLE_COMPONENTS ="DROP TABLE IF EXISTS "+ TABLE_COMPONENTS;
         //----- Table products
         private static final String TABLE_PRODUCTS = "products";   // Table Name
         private static final String UID_PRODUCT ="id";     // Column I (Primary Key)
         private static final String NAME_PRODUCT = "name";    //Column II
-        private static final String CREATE_TABLE_PRODUCTS = "CREATE TABLE "+ TABLE_PRODUCTS +" ("+ UID_PRODUCT +" INTEGER PRIMARY KEY AUTOINCREMENT, "+ NAME_PRODUCT +" VARCHAR(255));";
         private static final String DROP_TABLE_PRODUCTS ="DROP TABLE IF EXISTS "+ TABLE_PRODUCTS;
 
 
+        private static final String CREATE_TABLE_COMPONENTS = "CREATE TABLE "+ TABLE_COMPONENTS +" ("
+                + UID_COMPONENT +" INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + REFERENCE_TO_COMPONENT +" INTEGER, "
+                + NAME_COMPONENT + " VARCHAR(255), "
+                + "FOREIGN KEY("+REFERENCE_TO_COMPONENT+") REFERENCES "+TABLE_PRODUCTS+"("+UID_PRODUCT+"));";
+
+        private static final String CREATE_TABLE_PRODUCTS = "CREATE TABLE "+ TABLE_PRODUCTS +" ("
+                + UID_PRODUCT +" INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + NAME_PRODUCT +" VARCHAR(255));";
 
         public DbHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_Version);
@@ -82,5 +90,4 @@ public class DbAdapter {
             }
         }
     }
-
 }
