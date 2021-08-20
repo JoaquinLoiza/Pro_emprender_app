@@ -2,9 +2,7 @@ package proemprender.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -24,14 +22,9 @@ public class NewProductActivity extends AppCompatActivity {
 
     private void addNewProduct() {
         Button btn_products = (Button) findViewById(R.id.btn_addNewProduct);
-        btn_products.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                helper.insertProduct(name.getText().toString());
-                startActivity(new Intent(NewProductActivity.this, ProductsActivity.class));
-            }
+        btn_products.setOnClickListener(view -> {
+            helper.insertProduct(name.getText().toString());
+            finish();
         });
     }
-
-
 }

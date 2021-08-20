@@ -16,14 +16,14 @@ public class DbAdapter {
     public void insertProduct(String name) {
         SQLiteDatabase dbb = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DbHelper.NAME, name);
-        dbb.insert(DbHelper.TABLE_NAME, null , contentValues);
+        contentValues.put(DbHelper.NAME_PRODUCT, name);
+        dbb.insert(DbHelper.TABLE_PRODUCTS, null , contentValues);
         dbb.close();
     }
 
     public Cursor getProduct( Integer id ) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM "+ DbHelper.TABLE_NAME + " WHERE "+ DbHelper.UID +" = "+ id + ";",null);
+        Cursor cursor = db.rawQuery("SELECT * FROM "+ DbHelper.TABLE_PRODUCTS + " WHERE "+ DbHelper.UID_PRODUCT +" = "+ id + ";",null);
         db.close();
         return cursor;
     }
@@ -31,23 +31,31 @@ public class DbAdapter {
 
     public Cursor getProducts() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String[] columns = {DbHelper.UID, DbHelper.NAME};
-        return db.query(DbHelper.TABLE_NAME, columns, null, null, null, null, null);
+        String[] columns = {DbHelper.UID_PRODUCT, DbHelper.NAME_PRODUCT};
+        return db.query(DbHelper.TABLE_PRODUCTS, columns, null, null, null, null, null);
     }
 
 
     //-----------------------------------------------------------------------------------------------------------------
     static class DbHelper extends SQLiteOpenHelper {
 
-        //----- Table products
-        private static final String TABLE_NAME = "products";   // Table Name
-        private static final String UID="id";     // Column I (Primary Key)
-        private static final String NAME = "name";    //Column II
-        private static final String CREATE_TABLE = "CREATE TABLE "+TABLE_NAME+" ("+UID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+NAME+" VARCHAR(255));";
-
         private static final String DATABASE_NAME = "DB_ProEmprender";    // Database Name
         private static final int DATABASE_Version = 1;    // Database Version
-        private static final String DROP_TABLE ="DROP TABLE IF EXISTS "+TABLE_NAME;
+
+        //----- Table components
+        private static final String TABLE_COMPONENTS = "components";
+        private static final String UID_COMPONENT = "id";
+        private static final String NAME_COMPONENT = "name";
+        private static final String CREATE_TABLE_COMPONENTS = "CREATE TABLE "+ TABLE_COMPONENTS +" ("+ UID_COMPONENT +" INTEGER PRIMARY KEY AUTOINCREMENT, "+ NAME_COMPONENT +" VARCHAR(255));";
+        private static final String DROP_TABLE_COMPONENTS ="DROP TABLE IF EXISTS "+ TABLE_COMPONENTS;
+        //----- Table products
+        private static final String TABLE_PRODUCTS = "products";   // Table Name
+        private static final String UID_PRODUCT ="id";     // Column I (Primary Key)
+        private static final String NAME_PRODUCT = "name";    //Column II
+        private static final String CREATE_TABLE_PRODUCTS = "CREATE TABLE "+ TABLE_PRODUCTS +" ("+ UID_PRODUCT +" INTEGER PRIMARY KEY AUTOINCREMENT, "+ NAME_PRODUCT +" VARCHAR(255));";
+        private static final String DROP_TABLE_PRODUCTS ="DROP TABLE IF EXISTS "+ TABLE_PRODUCTS;
+
+
 
         public DbHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_Version);
@@ -55,7 +63,8 @@ public class DbAdapter {
 
         public void onCreate(SQLiteDatabase db) {
             try {
-                db.execSQL(CREATE_TABLE);
+                db.execSQL(CREATE_TABLE_PRODUCTS);
+                db.execSQL(CREATE_TABLE_COMPONENTS);
             } catch (Exception e) {
                 //Message.message(context,""+e);
             }
@@ -65,7 +74,8 @@ public class DbAdapter {
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             try {
                 //Message.message(context,"OnUpgrade");
-                db.execSQL(DROP_TABLE);
+                db.execSQL(DROP_TABLE_COMPONENTS);
+                db.execSQL(DROP_TABLE_PRODUCTS);
                 onCreate(db);
             }catch (Exception e) {
                 //Message.message(context,""+e);
