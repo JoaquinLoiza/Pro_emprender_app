@@ -65,13 +65,13 @@ public class ProductsActivity extends AppCompatActivity implements Serializable{
         products.setOnItemClickListener((parent, view, position, id) -> {
         Product p = productList.get(position);
         System.out.println("Nombre: " + p.getName() + ", Id: " + p.getId() + ", Position: " + position);
-        /*
+
         Intent intent = new Intent(ProductsActivity.this, ProductActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("product", p);
         intent.putExtras(bundle);
         startActivity(intent);
-         */
+
         });
     }
 }
