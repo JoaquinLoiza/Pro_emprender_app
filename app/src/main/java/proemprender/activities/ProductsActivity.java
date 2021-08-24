@@ -25,6 +25,7 @@ public class ProductsActivity extends AppCompatActivity {
         products= findViewById(R.id.dinamic_products);
         helper = new DbAdapter(this);
         loadProducts();
+        refreshActivity();
         ArrayAdapter<String> adapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dataList);
         products.setAdapter(adapter);
     }
@@ -33,6 +34,11 @@ public class ProductsActivity extends AppCompatActivity {
         Button btn_products = findViewById(R.id.btn_newProduct);
         btn_products.setOnClickListener(view ->
                 startActivity(new Intent(ProductsActivity.this, NewProductActivity.class)));
+    }
+
+    private void refreshActivity() {
+        Button btn_refresh = findViewById(R.id.btn_recargar);
+        btn_refresh.setOnClickListener(view -> recreate());
     }
 
     private void loadProducts() {
