@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProEmprender">
-        <activity android:name=".ProductActivity"></activity>
+        <activity android:name=".ProductActivity" />
         <activity android:name=".NewProductActivity" />
         <activity android:name=".ProductsActivity" />
         <activity android:name=".MainActivity">

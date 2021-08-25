@@ -1,37 +1,42 @@
 package proemprender.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import proemprender.Product;
 import proemprender.model.DbAdapter;
 
 public class ProductsActivity extends AppCompatActivity implements Serializable{
-    ListView products;
     ArrayList<String> dataList;
-    DbAdapter helper;
     ArrayList<Product> productList;
+    DbAdapter helper;
+    ListView productsListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products);
         newProductActivity();
-        products= findViewById(R.id.dinamic_products);
+        productsListView = findViewById(R.id.dinamic_products);
         helper = new DbAdapter(this);
+        dataList = new ArrayList<>();
+        productList = new ArrayList<>();
         loadProducts();
-        refreshActivity();
         onClickProduct();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dataList);
-        products.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadProducts();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.product_card, dataList);
+        productsListView.setAdapter(adapter);
     }
 
     private void newProductActivity(){
@@ -40,15 +45,9 @@ public class ProductsActivity extends AppCompatActivity implements Serializable{
                 startActivity(new Intent(ProductsActivity.this, NewProductActivity.class)));
     }
 
-    private void refreshActivity() {
-        Button btn_refresh = findViewById(R.id.btn_recargar);
-        btn_refresh.setOnClickListener(view -> recreate());
-    }
-
     private void loadProducts() {
-
-        dataList = new ArrayList<>();
-        productList = new ArrayList<>();
+        dataList.clear();
+        productList.clear();
         Cursor cursor = helper.getProducts();
 
         while (cursor.moveToNext()){
@@ -57,21 +56,18 @@ public class ProductsActivity extends AppCompatActivity implements Serializable{
         }
 
         for (Product p : productList) {
-            dataList.add(p.getName());
+            dataList.add(p.getName().toUpperCase());
         }
     }
 
     private void onClickProduct(){
-        products.setOnItemClickListener((parent, view, position, id) -> {
+        productsListView.setOnItemClickListener((parent, view, position, id) -> {
         Product p = productList.get(position);
-        System.out.println("Nombre: " + p.getName() + ", Id: " + p.getId() + ", Position: " + position);
-
         Intent intent = new Intent(ProductsActivity.this, ProductActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("product", p);
         intent.putExtras(bundle);
         startActivity(intent);
-
         });
     }
 }

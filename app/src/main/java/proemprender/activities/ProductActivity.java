@@ -17,8 +17,7 @@ public class ProductActivity extends AppCompatActivity {
         Bundle obj = getIntent().getExtras();
         if (obj != null) {
             p = (Product) obj.getSerializable("product");
-            System.out.println(p.getName());
-            title.setText(p.getName());
+            title.setText(p.getName().toUpperCase());
         }
     }
 }
