@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import proemprender.Product;
@@ -16,6 +19,7 @@ public class ProductsActivity extends AppCompatActivity implements Serializable{
     ArrayList<String> dataList;
     ArrayList<Product> productList;
     DbAdapter helper;
+    ArrayAdapter<String> adapter;
     ListView productsListView;
 
     @Override
@@ -27,7 +31,6 @@ public class ProductsActivity extends AppCompatActivity implements Serializable{
         helper = new DbAdapter(this);
         dataList = new ArrayList<>();
         productList = new ArrayList<>();
-        loadProducts();
         onClickProduct();
     }
 
@@ -35,17 +38,18 @@ public class ProductsActivity extends AppCompatActivity implements Serializable{
     protected void onResume() {
         super.onResume();
         loadProducts();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.product_card, dataList);
+        adapter = new ArrayAdapter<>(this, R.layout.product_card, dataList);
         productsListView.setAdapter(adapter);
     }
 
     private void newProductActivity(){
-        Button btn_products = findViewById(R.id.btn_newProduct);
+        FloatingActionButton btn_products = findViewById(R.id.btn_newProduct);
         btn_products.setOnClickListener(view ->
                 startActivity(new Intent(ProductsActivity.this, NewProductActivity.class)));
     }
 
     private void loadProducts() {
+        adapter = null;
         dataList.clear();
         productList.clear();
         Cursor cursor = helper.getProducts();
