@@ -4,23 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+import proemprender.ListAdapterProducts;
 import proemprender.Product;
 import proemprender.model.DbAdapter;
 
 public class ProductsActivity extends AppCompatActivity implements Serializable{
-    ArrayList<String> dataList;
-    ArrayList<Product> productList;
+
+    List<Product> productList;
     DbAdapter helper;
-    ArrayAdapter<String> adapter;
     ListView productsListView;
+    ListAdapterProducts adaptador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +27,6 @@ public class ProductsActivity extends AppCompatActivity implements Serializable{
         newProductActivity();
         productsListView = findViewById(R.id.dinamic_products);
         helper = new DbAdapter(this);
-        dataList = new ArrayList<>();
         productList = new ArrayList<>();
         onClickProduct();
     }
@@ -38,8 +35,8 @@ public class ProductsActivity extends AppCompatActivity implements Serializable{
     protected void onResume() {
         super.onResume();
         loadProducts();
-        adapter = new ArrayAdapter<>(this, R.layout.product_card, dataList);
-        productsListView.setAdapter(adapter);
+        adaptador = new ListAdapterProducts(this, R.layout.card_product, productList);
+        productsListView.setAdapter(adaptador);
     }
 
     private void newProductActivity(){
@@ -49,18 +46,12 @@ public class ProductsActivity extends AppCompatActivity implements Serializable{
     }
 
     private void loadProducts() {
-        adapter = null;
-        dataList.clear();
         productList.clear();
         Cursor cursor = helper.getProducts();
 
         while (cursor.moveToNext()){
-            Product product = new Product(cursor.getInt(0), cursor.getString(1));
+            Product product = new Product(cursor.getInt(0), cursor.getString(1), cursor.getInt(2));
             productList.add(product);
-        }
-
-        for (Product p : productList) {
-            dataList.add(p.getName().toUpperCase());
         }
     }
 

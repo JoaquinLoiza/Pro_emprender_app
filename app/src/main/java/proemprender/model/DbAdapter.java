@@ -31,7 +31,7 @@ public class DbAdapter {
 
     public Cursor getProducts() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String[] columns = {DbHelper.UID_PRODUCT, DbHelper.NAME_PRODUCT};
+        String[] columns = {DbHelper.UID_PRODUCT, DbHelper.NAME_PRODUCT, DbHelper.PRICE_PRODUCT};
         return db.query(DbHelper.TABLE_PRODUCTS, columns, null, null, null, null, null);
     }
 
@@ -52,6 +52,7 @@ public class DbAdapter {
         private static final String TABLE_PRODUCTS = "products";   // Table Name
         private static final String UID_PRODUCT ="id";     // Column I (Primary Key)
         private static final String NAME_PRODUCT = "name";    //Column II
+        private static final String PRICE_PRODUCT = "price";    //Column II
         private static final String DROP_TABLE_PRODUCTS ="DROP TABLE IF EXISTS "+ TABLE_PRODUCTS;
 
 
@@ -63,7 +64,8 @@ public class DbAdapter {
 
         private static final String CREATE_TABLE_PRODUCTS = "CREATE TABLE "+ TABLE_PRODUCTS +" ("
                 + UID_PRODUCT +" INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + NAME_PRODUCT +" VARCHAR(255));";
+                + NAME_PRODUCT +" VARCHAR(255),"
+                + PRICE_PRODUCT +" INTEGER);";
 
         public DbHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_Version);
