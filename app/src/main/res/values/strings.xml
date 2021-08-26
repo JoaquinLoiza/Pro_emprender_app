@@ -9,4 +9,6 @@
     <string name="btn_add">add product</string>
     <string name="layer_title">Producto</string>
     <string name="layer_price">Precio de venta</string>
+    <string name="contentDescriptionEdit">button edit</string>
+    <string name="contentDescriptionDelete">button delete</string>
 </resources>
