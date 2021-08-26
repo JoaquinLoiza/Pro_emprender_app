@@ -7,4 +7,6 @@
     <string name="priceNewProduct">Precio de venta</string>
     <string name="addProduct">Crear producto</string>
     <string name="btn_add">add product</string>
+    <string name="layer_title">Producto</string>
+    <string name="layer_price">Precio de venta</string>
 </resources>

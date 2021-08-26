@@ -18,7 +18,7 @@ public class ProductsActivity extends AppCompatActivity implements Serializable{
     List<Product> productList;
     DbAdapter helper;
     ListView productsListView;
-    ListAdapterProducts adaptador;
+    ListAdapterProducts adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +35,8 @@ public class ProductsActivity extends AppCompatActivity implements Serializable{
     protected void onResume() {
         super.onResume();
         loadProducts();
-        adaptador = new ListAdapterProducts(this, R.layout.card_product, productList);
-        productsListView.setAdapter(adaptador);
+        adapter = new ListAdapterProducts(this, R.layout.card_product, productList);
+        productsListView.setAdapter(adapter);
     }
 
     private void newProductActivity(){
