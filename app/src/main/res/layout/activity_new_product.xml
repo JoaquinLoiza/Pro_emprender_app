@@ -7,26 +7,49 @@
     android:background="@color/white2"
     tools:context=".NewProductActivity">
 
-    <EditText
-        android:id="@+id/input_nameProduct"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:ems="10"
-        android:hint="@string/nameNewProduct"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:importantForAutofill="no" />
-
     <Button
         android:id="@+id/btn_addNewProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:text="@string/addProduct"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_nameProduct" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginRight="60dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/input_nameProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/nameNewProduct"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            tools:layout_editor_absoluteX="-119dp"
+            tools:layout_editor_absoluteY="226dp" />
+
+        <EditText
+            android:id="@+id/input_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:ems="10"
+            android:hint="@string/priceNewProduct"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            tools:layout_editor_absoluteX="-119dp"
+            tools:layout_editor_absoluteY="226dp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

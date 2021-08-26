@@ -3,8 +3,8 @@
     <string name="title">Pro Emprender</string>
     <string name="products">Productos</string>
     <string name="profit_calculator">Calculadora de ganancias</string>
-    <string name="newProduct">+</string>
     <string name="nameNewProduct">Nombre del producto</string>
+    <string name="priceNewProduct">Precio de venta</string>
     <string name="addProduct">Crear producto</string>
     <string name="btn_add">add product</string>
 </resources>

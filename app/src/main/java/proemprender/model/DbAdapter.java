@@ -13,10 +13,11 @@ public class DbAdapter {
         dbHelper = new DbHelper(context);
     }
 
-    public void insertProduct(String name) {
+    public void insertProduct(String name, Integer price) {
         SQLiteDatabase dbb = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DbHelper.NAME_PRODUCT, name);
+        contentValues.put(DbHelper.PRICE_PRODUCT, price);
         dbb.insert(DbHelper.TABLE_PRODUCTS, null , contentValues);
         dbb.close();
     }
