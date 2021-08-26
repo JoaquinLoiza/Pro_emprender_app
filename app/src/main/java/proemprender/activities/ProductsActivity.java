@@ -1,19 +1,20 @@
 package proemprender.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.ListView;
+import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import proemprender.ListAdapterProducts;
 import proemprender.Product;
+import proemprender.dialogs.NewProductDialog;
 import proemprender.model.DbAdapter;
 
-public class ProductsActivity extends AppCompatActivity implements Serializable{
+public class ProductsActivity extends AppCompatActivity implements NewProductDialog.ProductDialogListener, Serializable {
 
     List<Product> productList;
     DbAdapter helper;
@@ -41,11 +42,13 @@ public class ProductsActivity extends AppCompatActivity implements Serializable{
 
     private void newProductActivity(){
         FloatingActionButton btn_products = findViewById(R.id.btn_newProduct);
-        btn_products.setOnClickListener(view ->
-                startActivity(new Intent(ProductsActivity.this, NewProductActivity.class)));
+        btn_products.setOnClickListener(view -> {
+            openDialog();
+        });
     }
 
     private void loadProducts() {
+        adapter = null;
         productList.clear();
         Cursor cursor = helper.getProducts();
 
@@ -64,5 +67,17 @@ public class ProductsActivity extends AppCompatActivity implements Serializable{
         intent.putExtras(bundle);
         startActivity(intent);
         });
+    }
+
+    public void openDialog() {
+        NewProductDialog Dialog = new NewProductDialog();
+        Dialog.show(getSupportFragmentManager(), "dialog");
+    }
+
+    @Override
+    public void setInputValues(String name, String price) {
+        int priceInt = Integer.parseInt(price);
+        helper.insertProduct(name, priceInt);
+        onResume();
     }
 }

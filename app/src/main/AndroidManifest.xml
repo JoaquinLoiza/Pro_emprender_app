@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ProductActivity" />
-        <activity android:name=".NewProductActivity" />
         <activity android:name=".ProductsActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
