@@ -54,9 +54,6 @@ public class ProductActivity extends AppCompatActivity implements ProductDialog.
 
     protected void refreshComponents() {
         loadComponents();
-        for (Component c:componentList) {
-            System.out.println(c.getName());
-        }
         adapter = new ListAdapterComponents(this, R.layout.card_component, componentList);
         componentsListView.setAdapter(adapter);
     }
@@ -70,6 +67,7 @@ public class ProductActivity extends AppCompatActivity implements ProductDialog.
             Component component = new Component(cursor.getInt(0), cursor.getString(2), cursor.getInt(3), cursor.getInt(4));
             componentList.add(component);
         }
+        cursor.close();
     }
 
     private void setInfo() {

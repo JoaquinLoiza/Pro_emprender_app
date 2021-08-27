@@ -66,6 +66,7 @@ public class ProductsActivity extends AppCompatActivity implements ProductDialog
             Product product = new Product(cursor.getInt(0), cursor.getString(1), cursor.getInt(2));
             productList.add(product);
         }
+        cursor.close();
     }
 
     //Escucha los clicks de cada item producto, y envia el objeto clickeado hacia otra actividad
