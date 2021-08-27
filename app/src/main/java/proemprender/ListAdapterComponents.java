@@ -40,7 +40,7 @@ public class ListAdapterComponents extends ArrayAdapter<Component> {
         TextView cant = view.findViewById(R.id.component_cant);
         name.setText(c.getName().toUpperCase());
         price.setText('$'+ c.getPrice().toString());
-        cant.setText(c.getCant().toString());
+        cant.setText(c.getCant().toString() + " g/u");
         return view;
     }
 }

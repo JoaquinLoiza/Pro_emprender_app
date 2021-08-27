@@ -39,12 +39,32 @@ public class Product implements Serializable {
     }
 
     public void addComponent(Component comp) {
-        this.component.add(comp);
+        if (!existComponent(comp.getId())){
+            this.component.add(comp);
+        }
     }
 
-    public ArrayList<Component> getComponent() {
+    private boolean existComponent(Integer id){
+        boolean exist = false;
+        for (Component c : component) {
+            if (c.getId() == id) {
+                exist = true;
+            }
+        }
+        return exist;
+    }
+
+    public ArrayList<Component> getComponents() {
         ArrayList<Component> copia = new ArrayList<Component>();
         copia.addAll(this.component);
         return copia;
+    }
+
+    public int returnCost() {
+        int cost = 0;
+        for (Component c: component) {
+            cost += c.getPrice();
+        }
+        return cost;
     }
 }

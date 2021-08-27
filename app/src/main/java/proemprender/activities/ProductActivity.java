@@ -10,9 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import proemprender.Component;
 import proemprender.ListAdapterComponents;
 import proemprender.Product;
@@ -30,7 +27,6 @@ public class ProductActivity extends AppCompatActivity implements ProductDialog.
     TextView cost;
     DbAdapter helper;
     Bundle obj;
-    List<Component> componentList;
     ListView componentsListView;
     ListAdapterComponents adapter;
 
@@ -48,24 +44,23 @@ public class ProductActivity extends AppCompatActivity implements ProductDialog.
         deleteProduct();
         addComponent();
         setInfo();
-        componentList = new ArrayList<>();
         refreshComponents();
     }
 
     protected void refreshComponents() {
         loadComponents();
-        adapter = new ListAdapterComponents(this, R.layout.card_component, componentList);
+        setInfo();
+        adapter = new ListAdapterComponents(this, R.layout.card_component, p.getComponents());
         componentsListView.setAdapter(adapter);
     }
 
     //Trae todos los productos de la base de datos y crea los objetos "Product" de cada uno
     private void loadComponents() {
         adapter = null;
-        componentList.clear();
         Cursor cursor = helper.getComponents(p.getId());
         while (cursor.moveToNext()){
             Component component = new Component(cursor.getInt(0), cursor.getString(2), cursor.getInt(3), cursor.getInt(4));
-            componentList.add(component);
+            p.addComponent(component);
         }
         cursor.close();
     }
@@ -75,6 +70,7 @@ public class ProductActivity extends AppCompatActivity implements ProductDialog.
             p = (Product) obj.getSerializable("product");
             title.setText(p.getName().toUpperCase());
             price.setText("$" + p.getPrice());
+            cost.setText("$" + p.returnCost());
         }
     }
 
