@@ -14,7 +14,7 @@
         android:layout_marginTop="140dp"
         android:fontFamily="@font/pacifico"
         android:text="@string/title"
-        android:textColor="@color/teal_500"
+        android:textColor="#0097A7"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,14 +36,18 @@
             android:id="@+id/btn_products"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/products" />
+            android:text="@string/products"
+            android:textColor="#263238"
+            tools:ignore="TextContrastCheck" />
 
         <Button
             android:id="@+id/btn_calculator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="@string/profit_calculator" />
+            android:text="@string/profit_calculator"
+            android:textColor="#263238"
+            tools:ignore="TextContrastCheck" />
 
     </LinearLayout>
 
