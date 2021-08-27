@@ -15,6 +15,7 @@ public class DbAdapter {
 
     public void addProduct(String name, Integer price) {
         SQLiteDatabase dbb = dbHelper.getWritableDatabase();
+        dbb.setForeignKeyConstraintsEnabled(true);
         ContentValues contentValues = new ContentValues();
         contentValues.put(DbHelper.NAME_PRODUCT, name);
         contentValues.put(DbHelper.PRICE_PRODUCT, price);
@@ -24,6 +25,7 @@ public class DbAdapter {
 
     public void addComponent(String name, Integer price, Integer cant, Integer idProduct) {
         SQLiteDatabase dbb = dbHelper.getWritableDatabase();
+        dbb.setForeignKeyConstraintsEnabled(true);
         ContentValues contentValues = new ContentValues();
         contentValues.put(DbHelper.NAME_COMPONENT, name);
         contentValues.put(DbHelper.PRICE_COMPONENT, price);
@@ -44,22 +46,21 @@ public class DbAdapter {
 
     public void deleteProduct( Integer id) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.setForeignKeyConstraintsEnabled(true);
         db.execSQL("DELETE FROM "+ DbHelper.TABLE_PRODUCTS + " WHERE "+ DbHelper.UID_PRODUCT +" = "+ id + ";");
         db.close();
     }
-
-    public Cursor getProduct( Integer id ) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM "+ DbHelper.TABLE_PRODUCTS + " WHERE "+ DbHelper.UID_PRODUCT +" = "+ id + ";",null);
-        db.close();
-        return cursor;
-    }
-
 
     public Cursor getProducts() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String[] columns = {DbHelper.UID_PRODUCT, DbHelper.NAME_PRODUCT, DbHelper.PRICE_PRODUCT};
         return db.query(DbHelper.TABLE_PRODUCTS, columns, null, null, null, null, null);
+    }
+
+    public Cursor getComponents(Integer id) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor cursor= db.rawQuery("SELECT * FROM "+ DbHelper.TABLE_COMPONENTS + " WHERE "+ DbHelper.FK_COMPONENT +" = "+"'"+ id + "'"+";",null);
+        return cursor;
     }
 
 
@@ -91,7 +92,7 @@ public class DbAdapter {
                 + NAME_COMPONENT + " VARCHAR(255), "
                 + PRICE_COMPONENT + " INTEGER, "
                 + CANT_COMPONENT + " INTEGER, "
-                + "FOREIGN KEY("+ FK_COMPONENT +") REFERENCES "+TABLE_PRODUCTS+"("+UID_PRODUCT+"));";
+                + "FOREIGN KEY("+ FK_COMPONENT +") REFERENCES "+TABLE_PRODUCTS+"("+UID_PRODUCT+") ON DELETE CASCADE );";
 
         private static final String CREATE_TABLE_PRODUCTS = "CREATE TABLE "+ TABLE_PRODUCTS +" ("
                 + UID_PRODUCT +" INTEGER PRIMARY KEY AUTOINCREMENT, "

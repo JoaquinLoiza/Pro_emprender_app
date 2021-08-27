@@ -7,11 +7,11 @@ public class Component {
     private Integer cant;
     private Integer price;
 
-    public Component(Integer id, String name, Integer cant, Integer price) {
+    public Component(Integer id, String name, Integer price, Integer cant) {
         this.id = id;
         this.name = name;
-        this.cant = cant;
         this.price = price;
+        this.cant = cant;
     }
 
     public Integer getId() {

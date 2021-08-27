@@ -1,6 +1,8 @@
 package proemprender.activities;
 
+import android.database.Cursor;
 import android.os.Bundle;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -8,6 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import proemprender.Component;
+import proemprender.ListAdapterComponents;
 import proemprender.Product;
 import proemprender.dialogs.ComponentDialog;
 import proemprender.dialogs.ConfirmDialog;
@@ -23,11 +30,15 @@ public class ProductActivity extends AppCompatActivity implements ProductDialog.
     TextView cost;
     DbAdapter helper;
     Bundle obj;
+    List<Component> componentList;
+    ListView componentsListView;
+    ListAdapterComponents adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
+        componentsListView = findViewById(R.id.dinamic_list_component);
         title = findViewById(R.id.title_product);
         price = findViewById(R.id.price);
         cost = findViewById(R.id.cost);
@@ -37,6 +48,28 @@ public class ProductActivity extends AppCompatActivity implements ProductDialog.
         deleteProduct();
         addComponent();
         setInfo();
+        componentList = new ArrayList<>();
+        refreshComponents();
+    }
+
+    protected void refreshComponents() {
+        loadComponents();
+        for (Component c:componentList) {
+            System.out.println(c.getName());
+        }
+        adapter = new ListAdapterComponents(this, R.layout.card_component, componentList);
+        componentsListView.setAdapter(adapter);
+    }
+
+    //Trae todos los productos de la base de datos y crea los objetos "Product" de cada uno
+    private void loadComponents() {
+        adapter = null;
+        componentList.clear();
+        Cursor cursor = helper.getComponents(p.getId());
+        while (cursor.moveToNext()){
+            Component component = new Component(cursor.getInt(0), cursor.getString(2), cursor.getInt(3), cursor.getInt(4));
+            componentList.add(component);
+        }
     }
 
     private void setInfo() {
@@ -125,6 +158,7 @@ public class ProductActivity extends AppCompatActivity implements ProductDialog.
             int priceInt = Integer.parseInt(componentPrice);
             int cantInt = Integer.parseInt(componentCant);
             helper.addComponent(componentName, priceInt, cantInt, p.getId());
+            refreshComponents();
         }
     }
 }
