@@ -22,6 +22,21 @@ public class DbAdapter {
         dbb.close();
     }
 
+    public void editProduct( Integer id, String name, Integer price) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.execSQL("UPDATE "+ DbHelper.TABLE_PRODUCTS + " SET "+
+                DbHelper.NAME_PRODUCT + "=" +"'"+ name +"'"+ ", "+
+                DbHelper.PRICE_PRODUCT + "=" +price+
+                " WHERE "+DbHelper.UID_PRODUCT+"="+id+";");
+        db.close();
+    }
+
+    public void deleteProduct( Integer id) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.execSQL("DELETE FROM "+ DbHelper.TABLE_PRODUCTS + " WHERE "+ DbHelper.UID_PRODUCT +" = "+ id + ";");
+        db.close();
+    }
+
     public Cursor getProduct( Integer id ) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM "+ DbHelper.TABLE_PRODUCTS + " WHERE "+ DbHelper.UID_PRODUCT +" = "+ id + ";",null);

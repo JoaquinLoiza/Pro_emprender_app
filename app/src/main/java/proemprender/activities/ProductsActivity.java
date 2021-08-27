@@ -36,6 +36,11 @@ public class ProductsActivity extends AppCompatActivity implements NewProductDia
 
     }
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        refreshProducts();
+    }
 
     protected void refreshProducts() {
         loadProducts();
@@ -77,7 +82,7 @@ public class ProductsActivity extends AppCompatActivity implements NewProductDia
 
     //Muestra el dialogo con los inputs para agregar un producto
     public void openDialog() {
-        NewProductDialog Dialog = new NewProductDialog();
+        NewProductDialog Dialog = new NewProductDialog("Nuevo Producto", null, null);
         Dialog.show(getSupportFragmentManager(), "dialog");
     }
 

@@ -17,6 +17,15 @@ public class NewProductDialog extends AppCompatDialogFragment {
     private EditText editTextProductName;
     private EditText editTextProductPrice;
     private ProductDialogListener listener;
+    private final String title;
+    private final String name;
+    private final String price;
+
+    public NewProductDialog(String title, String name, String price) {
+        this.title = title;
+        this.name = name;
+        this.price = price;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -26,7 +35,7 @@ public class NewProductDialog extends AppCompatDialogFragment {
         View view = inflater.inflate(R.layout.dialog_new_product, null);
 
         builder.setView(view)
-                .setTitle("Nuevo Producto")
+                .setTitle(title)
                 .setNegativeButton("cancelar", (dialogInterface, i) -> {
 
                 })
@@ -38,6 +47,11 @@ public class NewProductDialog extends AppCompatDialogFragment {
 
         editTextProductName = view.findViewById(R.id.input_name);
         editTextProductPrice = view.findViewById(R.id.input_price);
+
+        if (name != null && price != null) {
+            editTextProductName.setText(name);
+            editTextProductPrice.setText(price);
+        }
 
         return builder.create();
     }
