@@ -16,7 +16,7 @@ public class Product implements Serializable {
         this.price = price;
         this.component = new ArrayList<Component>();
     }
-
+    //Getters
     public Integer getId() {
         return id;
     }
@@ -27,6 +27,15 @@ public class Product implements Serializable {
 
     public Integer getPrice() {
         return price;
+    }
+
+    //Setters
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
     public void addComponent(Component comp) {

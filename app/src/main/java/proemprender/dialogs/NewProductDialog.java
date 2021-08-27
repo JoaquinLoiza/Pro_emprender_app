@@ -36,10 +36,10 @@ public class NewProductDialog extends AppCompatDialogFragment {
 
         builder.setView(view)
                 .setTitle(title)
-                .setNegativeButton("cancelar", (dialogInterface, i) -> {
+                .setNegativeButton("Cancelar", (dialogInterface, i) -> {
 
                 })
-                .setPositiveButton("Agregar", (dialogInterface, i) -> {
+                .setPositiveButton("Confirmar", (dialogInterface, i) -> {
                     String name = editTextProductName.getText().toString();
                     String price = editTextProductPrice.getText().toString();
                     listener.setInputValues(name, price);

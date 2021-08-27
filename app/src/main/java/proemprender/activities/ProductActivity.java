@@ -3,13 +3,17 @@ package proemprender.activities;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import proemprender.Product;
+import proemprender.dialogs.ConfirmDialog;
 import proemprender.dialogs.NewProductDialog;
 import proemprender.model.DbAdapter;
 
-public class ProductActivity extends AppCompatActivity implements NewProductDialog.ProductDialogListener{
+public class ProductActivity extends AppCompatActivity implements NewProductDialog.ProductDialogListener, ConfirmDialog.ProductDialogConfirm{
 
     Product p;
     TextView title;
@@ -44,15 +48,14 @@ public class ProductActivity extends AppCompatActivity implements NewProductDial
     private void deleteProduct(){
         FloatingActionButton delete_product = findViewById(R.id.btn_delete_product);
         delete_product.setOnClickListener(view -> {
-            helper.deleteProduct(p.getId());
-            this.finish();
+            openDialogConfirDeleteProduct();
         });
     }
 
     private void editProduct(){
         FloatingActionButton edit_product = findViewById(R.id.btn_edit_product);
         edit_product.setOnClickListener(view -> {
-            openDialog();
+            openDialogEditProduct();
         });
     }
 
@@ -63,12 +66,12 @@ public class ProductActivity extends AppCompatActivity implements NewProductDial
         });
     }
 
-    public void openDialog() {
-        NewProductDialog Dialog = new NewProductDialog("Editar Producto", null, null);
+    public void openDialogEditProduct() {
+        NewProductDialog Dialog = new NewProductDialog("Editar Producto", p.getName(), p.getPrice().toString());
         Dialog.show(getSupportFragmentManager(), "dialog");
     }
 
-    //Inserta el producto en la base de datos
+    //Edita el producto en la base de datos
     @Override
     public void setInputValues(String name, String price) {
         if (name.isEmpty()) {
@@ -80,8 +83,21 @@ public class ProductActivity extends AppCompatActivity implements NewProductDial
         else {
             int priceInt = Integer.parseInt(price);
             helper.editProduct(p.getId(), name, priceInt);
-            this.title.setText(name);
+            this.title.setText(name.toUpperCase());
             this.price.setText("$" + price);
+            p.setName(name);
+            p.setPrice(priceInt);
         }
+    }
+
+    public void openDialogConfirDeleteProduct() {
+        ConfirmDialog dialog = new ConfirmDialog("¡Alerta!","Seguro que quiere eliminar el producto " + p.getName());
+        dialog.show(getSupportFragmentManager(), "dialog");
+    }
+
+    @Override
+    public void confirmDialog() {
+        helper.deleteProduct(p.getId());
+        this.finish();
     }
 }
