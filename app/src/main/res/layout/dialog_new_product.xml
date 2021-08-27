@@ -16,6 +16,7 @@
         android:id="@+id/input_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
         android:layout_below="@id/input_name"
         android:layout_alignParentStart="true"
         android:hint="@string/priceNewProduct"
