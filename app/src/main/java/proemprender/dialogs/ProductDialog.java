@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import proemprender.activities.R;
 
 
-public class NewProductDialog extends AppCompatDialogFragment {
+public class ProductDialog extends AppCompatDialogFragment {
     private EditText editTextProductName;
     private EditText editTextProductPrice;
     private ProductDialogListener listener;
@@ -21,7 +21,7 @@ public class NewProductDialog extends AppCompatDialogFragment {
     private final String name;
     private final String price;
 
-    public NewProductDialog(String title, String name, String price) {
+    public ProductDialog(String title, String name, String price) {
         this.title = title;
         this.name = name;
         this.price = price;

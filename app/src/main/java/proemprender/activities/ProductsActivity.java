@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import proemprender.ListAdapterProducts;
 import proemprender.Product;
-import proemprender.dialogs.NewProductDialog;
+import proemprender.dialogs.ProductDialog;
 import proemprender.model.DbAdapter;
 
-public class ProductsActivity extends AppCompatActivity implements NewProductDialog.ProductDialogListener, Serializable {
+public class ProductsActivity extends AppCompatActivity implements ProductDialog.ProductDialogListener, Serializable {
 
     List<Product> productList;
     DbAdapter helper;
@@ -82,7 +82,7 @@ public class ProductsActivity extends AppCompatActivity implements NewProductDia
 
     //Muestra el dialogo con los inputs para agregar un producto
     public void openDialog() {
-        NewProductDialog Dialog = new NewProductDialog("Nuevo Producto", null, null);
+        ProductDialog Dialog = new ProductDialog("Nuevo Producto", null, null);
         Dialog.show(getSupportFragmentManager(), "dialog");
     }
 
@@ -97,7 +97,7 @@ public class ProductsActivity extends AppCompatActivity implements NewProductDia
         }
         else {
             int priceInt = Integer.parseInt(price);
-            helper.insertProduct(name, priceInt);
+            helper.addProduct(name, priceInt);
             refreshProducts();
         }
     }

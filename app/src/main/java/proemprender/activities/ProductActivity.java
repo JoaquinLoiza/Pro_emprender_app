@@ -9,11 +9,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import proemprender.Product;
+import proemprender.dialogs.ComponentDialog;
 import proemprender.dialogs.ConfirmDialog;
-import proemprender.dialogs.NewProductDialog;
+import proemprender.dialogs.ProductDialog;
 import proemprender.model.DbAdapter;
 
-public class ProductActivity extends AppCompatActivity implements NewProductDialog.ProductDialogListener, ConfirmDialog.ProductDialogConfirm{
+public class ProductActivity extends AppCompatActivity implements ProductDialog.ProductDialogListener,
+        ConfirmDialog.ProductDialogConfirm, ComponentDialog.ComponentDialogListener {
 
     Product p;
     TextView title;
@@ -62,12 +64,12 @@ public class ProductActivity extends AppCompatActivity implements NewProductDial
     private void addComponent(){
         FloatingActionButton add_component = findViewById(R.id.btn_add_component);
         add_component.setOnClickListener(view -> {
-            System.out.println("Agregar nuevo componente");
+            openDialogAddComponent();
         });
     }
 
     public void openDialogEditProduct() {
-        NewProductDialog Dialog = new NewProductDialog("Editar Producto", p.getName(), p.getPrice().toString());
+        ProductDialog Dialog = new ProductDialog("Editar Producto", p.getName(), p.getPrice().toString());
         Dialog.show(getSupportFragmentManager(), "dialog");
     }
 
@@ -99,5 +101,30 @@ public class ProductActivity extends AppCompatActivity implements NewProductDial
     public void confirmDialog() {
         helper.deleteProduct(p.getId());
         this.finish();
+    }
+
+
+    public void openDialogAddComponent() {
+        ComponentDialog dialog = new ComponentDialog("Nuevo componente", null, null, null);
+        dialog.show(getSupportFragmentManager(), "dialog");
+    }
+
+    // Agrega un componente al producto
+    @Override
+    public void confirmInputValues(String componentName, String componentPrice, String componentCant) {
+        if (componentName.isEmpty()) {
+            Toast.makeText(this, "El campo nombre está vacio", Toast.LENGTH_LONG).show();
+        }
+        else if (componentPrice.isEmpty()){
+            Toast.makeText(this, "El campo precio está vacio", Toast.LENGTH_LONG).show();
+        }
+        else if (componentCant.isEmpty()){
+            Toast.makeText(this, "El campo cantidad está vacio", Toast.LENGTH_LONG).show();
+        }
+        else {
+            int priceInt = Integer.parseInt(componentPrice);
+            int cantInt = Integer.parseInt(componentCant);
+            helper.addComponent(componentName, priceInt, cantInt, p.getId());
+        }
     }
 }

@@ -13,12 +13,23 @@ public class DbAdapter {
         dbHelper = new DbHelper(context);
     }
 
-    public void insertProduct(String name, Integer price) {
+    public void addProduct(String name, Integer price) {
         SQLiteDatabase dbb = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DbHelper.NAME_PRODUCT, name);
         contentValues.put(DbHelper.PRICE_PRODUCT, price);
         dbb.insert(DbHelper.TABLE_PRODUCTS, null , contentValues);
+        dbb.close();
+    }
+
+    public void addComponent(String name, Integer price, Integer cant, Integer idProduct) {
+        SQLiteDatabase dbb = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DbHelper.NAME_COMPONENT, name);
+        contentValues.put(DbHelper.PRICE_COMPONENT, price);
+        contentValues.put(DbHelper.CANT_COMPONENT, cant);
+        contentValues.put(DbHelper.FK_COMPONENT, idProduct);
+        dbb.insert(DbHelper.TABLE_COMPONENTS, null , contentValues);
         dbb.close();
     }
 
@@ -62,7 +73,9 @@ public class DbAdapter {
         private static final String TABLE_COMPONENTS = "components";
         private static final String UID_COMPONENT = "id";
         private static final String NAME_COMPONENT = "name";
-        private static final String REFERENCE_TO_COMPONENT = "fk_componentes";
+        private static final String PRICE_COMPONENT = "price";
+        private static final String CANT_COMPONENT = "cant";
+        private static final String FK_COMPONENT = "fk_componente";
         private static final String DROP_TABLE_COMPONENTS ="DROP TABLE IF EXISTS "+ TABLE_COMPONENTS;
         //----- Table products
         private static final String TABLE_PRODUCTS = "products";   // Table Name
@@ -74,9 +87,11 @@ public class DbAdapter {
 
         private static final String CREATE_TABLE_COMPONENTS = "CREATE TABLE "+ TABLE_COMPONENTS +" ("
                 + UID_COMPONENT +" INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + REFERENCE_TO_COMPONENT +" INTEGER, "
+                + FK_COMPONENT +" INTEGER, "
                 + NAME_COMPONENT + " VARCHAR(255), "
-                + "FOREIGN KEY("+REFERENCE_TO_COMPONENT+") REFERENCES "+TABLE_PRODUCTS+"("+UID_PRODUCT+"));";
+                + PRICE_COMPONENT + " INTEGER, "
+                + CANT_COMPONENT + " INTEGER, "
+                + "FOREIGN KEY("+ FK_COMPONENT +") REFERENCES "+TABLE_PRODUCTS+"("+UID_PRODUCT+"));";
 
         private static final String CREATE_TABLE_PRODUCTS = "CREATE TABLE "+ TABLE_PRODUCTS +" ("
                 + UID_PRODUCT +" INTEGER PRIMARY KEY AUTOINCREMENT, "
